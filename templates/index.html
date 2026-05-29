@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Мои записи</h2>
+
+{% if entries %}
+    {% for entry in entries %}
+    <div class="card">
+        <h3>{{ entry.title }}</h3>
+        <p>{{ entry.date }}</p>
+        <a href="{{ url_for('detail', entry_id=loop.index0) }}">Читать</a>
+        <form action="{{ url_for('delete', entry_id=loop.index0) }}" method="POST" style="display: inline;">
+            <button type="submit" onclick="return confirm('Удалить?')">Удалить</button>
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Нет записей. <a href="{{ url_for('add') }}">Создать</a></p>
+{% endif %}
+{% endblock %}
